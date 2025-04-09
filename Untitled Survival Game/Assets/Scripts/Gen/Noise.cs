@@ -16,7 +16,7 @@ public static class Noise
 
         for(int y = 0; y < mapHeight; y++)
         {
-            for(int x = 0; x < mapWidth; x++)
+            for (int x = 0; x < mapWidth; x++)
             {
 
                 float amplitude = 1;
@@ -36,17 +36,22 @@ public static class Noise
                     frequency *= lacunarity;
                 }
 
-                if(noiseHight > maxNoiseHight)
+                if (noiseHight > maxNoiseHight)
                 {
                     maxNoiseHight = noiseHight;
                 }
-                else if(noiseHight < minNoiseHight)
+                else if (noiseHight < minNoiseHight)
                 {
                     minNoiseHight = noiseHight;
                 }
-
-
                 noiseMap[y, x] = noiseHight;
+            }
+        }
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++)
+            {
+                noiseMap[x, y] = Mathf.InverseLerp(minNoiseHight, maxNoiseHight, noiseMap[x, y]);
             }
         }
 
