@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class MapGen : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
     public int mapWidth;
     public int mapHeight;
     public float noiseScale;
 
-    public void GernerateMap()
+    public bool autoUpdate;
+
+    public void GenerateMap()
     {
         float[,] noiseMap = Noise.GenerateNoiseMap (mapHeight, mapWidth, noiseScale);
 
