@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
 {
-    public Renderer renderer;
+    public Renderer textureRenderer;
 
     public void DrawNoiseMap(float[,] noiseMap)
     {
@@ -19,5 +19,10 @@ public class MapDisplay : MonoBehaviour
                 colourMap[y * width + x] = Color.Lerp(Color.black, Color.white, noiseMap[x, y]);
             }
         }
+        texture.SetPixels (colourMap);
+        texture.Apply ();
+
+        textureRenderer.sharedMaterial.mainTexture = texture;
+        textureRenderer.transform.localScale = new Vector3(width,1, height);
     }
 }
