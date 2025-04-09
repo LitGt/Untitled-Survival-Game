@@ -2,9 +2,18 @@ using UnityEngine;
 
 public static class Noise
 {
-    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float scale, int octives, float persistance, float lacunarity)
+    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, int seed, float scale, int octives, float persistance, float lacunarity, Vector2 offset)
     {
         float[,] noiseMap = new float[mapWidth, mapHeight];
+
+        System.Random prng = new System.Random(seed);
+        Vector2[] octiveOffsets = new Vector2[octives];
+        for (int i = 0; i < octives; i++)
+        {
+            float offetX = prng.Next(-100000, 100000) + offset.x;
+            float offetY = prng.Next(-100000, 100000) + offset.y;
+            octiveOffsets[i] = new Vector2 (offetX, offetY);
+        }
 
         if(scale <= 0)
         {
@@ -25,8 +34,8 @@ public static class Noise
 
                 for (int i = 0; i < octives; i++)
                 {
-                    float sampleX = x / scale * frequency;
-                    float sampleY = y / scale * frequency;
+                    float sampleX = x / scale * frequency + octiveOffsets[i].x;
+                    float sampleY = y / scale * frequency + octiveOffsets[i].y;
 
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
                     noiseHight += perlinValue * amplitude;
